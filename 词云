@@ -1,0 +1,28 @@
+import jieba
+import numpy as np
+import pandas as pd
+from wordcloud import WordCloud, ImageColorGenerator
+import matplotlib.pyplot as plt
+import os,sys
+from PIL import Image
+with open('1.txt','r+',encoding='gbk') as f:
+    text=f.read()
+file1=jieba.lcut(text)
+file2=''.join(file1)
+print(file2)
+background_image=np.array(Image.open("图片5.png"))
+s=''
+excludes=set()
+for i in range(16):
+    s='问题'+str(i)
+    excludes.add(s)
+excludes.add('无')
+excludes.add('问题')
+wordcloud = WordCloud(font_path="msyh.ttc",
+                      width=800,
+                      height=600,
+                      background_color="white",
+                      stopwords=excludes,
+                      max_font_size=80,
+                      mask=background_image).generate(file2)
+wordcloud.to_file('3.png')
